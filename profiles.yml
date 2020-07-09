@@ -1,0 +1,12 @@
+jaffle_shop: # this needs to match the profile: in your dbt_project.yml file
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: oauth
+      project: honey-sandbox-core-analytics # Replace this with your project id
+      dataset: dbt_steve_test # Replace this with dbt_your_name, e.g. dbt_bob
+      threads: 1
+      timeout_seconds: 300
+      location: US
+      priority: interactive
