@@ -11,17 +11,15 @@ on:
 jobs:
   post_job:
     runs-on: ubuntu-latest
+    env:
+      SUPER_SECRET: ${{ secrets.SuperSecret }}
     steps:
-      - shell: bash
-        env:
-          SUPER_SECRET: ${{ secrets.SuperSecret }}
-        - uses: actions/checkout@v3
-
-        - name: Trigger Probot webhook event
-          run: |
-            curl -X POST https://smee.io/WkzuYJH9Uc6Nu28 \
-                -H "Authorization: Basic $SUPER_SECRET" \
-                -H 'Content-Type: application/json' \
-                -H "Accept: application/json" \
-                -d '{"event": "schedule", "action": "stale"}'
+      - uses: actions/checkout@v3
+      - name: Trigger Probot webhook event
+        run: |
+          curl -X POST https://smee.io/WkzuYJH9Uc6Nu28 \
+               -H "Authorization: Basic $SUPER_SECRET" \
+               -H 'Content-Type: application/json' \
+               -H "Accept: application/json" \
+               -d '{"event": "schedule", "action": "stale"}'
 
