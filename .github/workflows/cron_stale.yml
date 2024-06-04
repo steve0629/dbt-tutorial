@@ -1,0 +1,26 @@
+name: Scheduled POST Request
+
+on:
+  schedule:
+    # Every 15 minutes
+    - cron: "0 * * * *"
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  post_job:
+    runs-on: ubuntu-latest
+    steps:
+      env:
+        SUPER_SECRET: ${{ secrets.SuperSecret }}
+      - uses: actions/checkout@v3
+
+      - name: Trigger Probot webhook event
+        run: |
+          curl -X POST https://smee.io/WkzuYJH9Uc6Nu28 \
+               -H "Authorization: Basic $SUPER_SECRET" \
+               -H 'Content-Type: application/json' \
+               -H "Accept: application/json" \
+               -d '{"event": "schedule", "action": "stale"}'
+
